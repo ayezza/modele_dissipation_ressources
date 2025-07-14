@@ -4,7 +4,7 @@ This project implements a numerical optimization model for biomass management, c
 
 The Volerra integral equation case is formulated based on my doctorate thesis in 1991, fourth application (pp. 159-169): 
 [Thèse de doctorat Yezza Abdelwahab]
-(https://umontreal.scholaris.ca/items/74617e11-091c-4e14-9fd7-7ef01b852eb4) - Ph.D Yezza Abdelwahab, 1991
+(https://umontreal.scholaris.ca/bitstreams/f3f9d2c1-d190-4aef-997d-1e51bc87eb4a/download) - Ph.D Yezza Abdelwahab, 1991
 
 
 
