@@ -93,7 +93,7 @@ class BiomassModel:
         sur l'intervalle [0, T] avec le contrôle u(t) et la biomasse x(t).
         
         Le profit instantané est défini par :
-        profit(t) = e^{-δt} * (c - p * x(t)) * u(t)
+        profit(t) = e^{-δt} * (p - c) * x(t) * u(t)
         
         où c est le coût unitaire de l'effort, p est le prix par unité de biomasse,
         δ est le taux d'actualisation.
@@ -104,7 +104,9 @@ class BiomassModel:
         t = np.linspace(0, T, N+1)
         profit = 0.0
         for i in range(N):
-            profit += np.exp(-self.params['interest_rate'] * t[i]) * (self.params['c'] - self.params['p'] * x_func[i]) * u_func[i] * dt
+            revenue = self.params['unit_price'] * u_func[i] * x_func[i]
+            cost = self.params['unit_cost'] * u_func[i] * x_func[i]
+            profit += np.exp(-self.params['interest_rate'] * t[i]) * (revenue - cost) * dt
         return profit
 
     
@@ -113,10 +115,10 @@ class BiomassModel:
         dt = self.params['T'] / self.params['N']
         """        Calcule le profit instantané à chaque pas de temps.
         Le profit instantané est défini par :
-        profit(t) = e^{-δt} * (c - p * x(t))u(t)
+        profit(t) = e^{-δt} * (p - c) * x(t) * u(t)
         """
         revenue = self.params['unit_price'] * u * x
-        cost = self.params['unit_cost'] * u
+        cost = self.params['unit_cost'] * u * x
  
         profit_instant = np.exp(-self.params['interest_rate'] * t) * (revenue - cost) * dt
         
