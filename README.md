@@ -86,6 +86,8 @@ All output files are prefixed by a unique GUID:
 ### Graphs
 <img src="https://github.com/ayezza/modele_dissipation_ressources/blob/main/output/biomass_optimization_results_02c582ef.png" alt="Biomass Optimization Results" width="1200" height="800">
 <img src="https://github.com/ayezza/modele_dissipation_ressources/blob/main/output/biomass_optimization_results_28c03176.png" alt="Biomass Optimization Results" width="1200" height="800">
+<img src="https://github.com/ayezza/modele_dissipation_ressources/blob/main/output/csv_output.png" alt="CSV Output" width="1200" height="800">
+<img src="https://github.com/ayezza/modele_dissipation_ressources/blob/main/output/excel_output.png" alt="Excel Output" width="1200" height="800">
 
 
 ### CSV 
