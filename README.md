@@ -81,6 +81,20 @@ All output files are prefixed by a unique GUID:
   - **Detailed_Results:** Time series of all variables
   - **Parameters:** Model configuration
 
+## Examples of output files
+
+### Graphs
+<img src="https://github.com/ayezza/modele_dissipation_ressources/blob/main/output/biomass_optimization_results_02c582ef.png" alt="Biomass Optimization Results" width="800" height="600">
+<img src="https://github.com/ayezza/modele_dissipation_ressources/blob/main/output/biomass_optimization_results_28c03176.png" alt="Biomass Optimization Results" width="800" height="600">
+
+
+### CSV 
+
+
+### Excel 
+
+
+
 ## Mathematical Model
 
 ### Objective Function
