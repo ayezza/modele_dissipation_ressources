@@ -31,20 +31,20 @@ pip install numpy pandas scipy matplotlib openpyxl
 
 ## 📦 Configuration
 
-Create a `params.json` file with the following parameters:
+Create a `params.json` file with the following parameters that can be modified from which the main program will extract the parameters:
 
 ```json
 {
-    "T": 20,                  // Time horizon
-    "N": 240,                // Number of time steps
+    "T": 20,                  // Time horizon generally in years
+    "N": 240,                // Number of time steps for simulation
     "x0": 500.0,             // Initial biomass
     "r_growth": 5.0,         // Growth rate
     "K": 5000.0,             // Carrying capacity
-    "dissipation_rate": 0.01,// Memory effect parameter (applies to Volterra model only)
+    "dissipation_rate": 0.05,// Memory effect parameter (applies to Volterra model only)
     "interest_rate": 0.05,   // Economic discount rate
-    "unit_cost": 2,          // Cost per unit effort
-    "unit_price": 10,        // Price per unit biomass
-    "E": 5,                  // Maximum harvesting effort
+    "unit_cost": 2.0,          // Cost per unit effort
+    "unit_price": 10.0,        // Price per unit biomass
+    "E": 1.0,                  // Maximum harvesting effort
     "model_type": "volterra" // Model type: "volterra" or "differential"
 }
 ```
@@ -58,8 +58,8 @@ python main.py
 
 The program will:
 1. Load parameters from `params.json`
-2. Optimize the harvesting strategy
-3. Generate visualizations
+2. Optimize the harvesting strategy depending of the model type (Volterra or Differential)
+3. Generate visualizations and save them as png images in the `output` directory
 4. Save results to CSV and Excel files in the `output` directory
 
 ## 📋 Output
@@ -73,9 +73,11 @@ These graphs are generated in the same figure:
 - Cumulative profit
 
 ### Files Generated
-- `biomass_optimization_results.png`: Combined visualization of all results
-- `biomass_optimization_timeseries.csv`: Time series data
-- `detailed_results.xlsx`: Detailed results with multiple sheets including:
+All output files are prefixed by a unique GUID:
+
+- `biomass_optimization_results_GUID.png`: Combined visualization of all results
+- `biomass_optimization_timeseries_GUID.csv`: Time series data
+- `detailed_results_GUID.xlsx`: Detailed results with multiple sheets including:
   - **Detailed_Results:** Time series of all variables
   - **Parameters:** Model configuration
 
@@ -84,7 +86,7 @@ These graphs are generated in the same figure:
 ### Objective Function
 Maximize the discounted profit:
 ```math
-J(x,u) = ∫₀ᵀ e⁻ᵟᵗ(p·x(t)·u(t) - c·u(t))dt
+J = ∫0^T e^{-δt} (c - p * x(t))u(t) dt
 ```
 
 ### Constraints
@@ -111,9 +113,9 @@ modele_dissipation_ressources/
 ├── README.md           # Project documentation
 ├── requirements.txt    # Python dependencies
 └── output/            # Generated output directory
-    ├── biomass_optimization_results.png    # Visualization plots
-    ├── biomass_optimization_timeseries.csv # Time series data
-    └── detailed_results.xlsx              # Detailed analysis results
+    ├── biomass_optimization_results_GUID.png    # Visualization plots
+    ├── biomass_optimization_timeseries_GUID.csv # Time series data
+    └── detailed_results_GUID.xlsx              # Detailed analysis results
 ```
 
 ### Key Files Description
