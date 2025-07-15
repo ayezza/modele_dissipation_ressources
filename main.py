@@ -1,3 +1,4 @@
+import uuid  # used to generate unique run IDs for output files
 import os
 # -*- coding: utf-8 -*- 
 import json
@@ -6,6 +7,7 @@ import pandas as pd
 from scipy.optimize import minimize
 import matplotlib.pyplot as plt
 import matplotlib.gridspec as gridspec  
+
 
 
 class BiomassModel:
@@ -21,6 +23,13 @@ class BiomassModel:
             os.makedirs(self.output_dir)
             self.output_dir = os.path.abspath(self.output_dir)
         self.validate_params(params)
+        
+        self.run_id = str(uuid.uuid4())[:8]  # Generate short unique ID for this run
+        self.validate_params(params)
+
+    def get_output_filename(self, base_name, extension):
+        """Generate unique filename with run ID"""
+        return os.path.join(self.output_dir, f"{base_name}_{self.run_id}.{extension}")
         
     def validate_params(self, params):
         # Ensure all required parameters are present
@@ -143,7 +152,10 @@ class BiomassModel:
         u0 = np.full(N, self.params['E'] / 2)  # Effort initial faible
         
         # Définir les bornes pour chaque contrôle : u[i] ∈ [0, E]
-        bounds = [(0, self.params['E'])] * N
+        # ensure that u does not exceed the maximum effort E and that E does not exceed 1
+        bounds = [(0, min(self.params['E'], 1.0))]
+        # bounds = [(0, self.params['E'])] * N  # Original line
+        
         
         # On utilise la méthode SLSQP du solveur scipy.optimize.minimize
         res = minimize(self.objective, u0, bounds=bounds, method='SLSQP',
@@ -233,7 +245,10 @@ class BiomassModel:
 
         plt.suptitle('Optimisation du contrôle de la biomasse avec IDE', fontsize=16)
         plt.tight_layout(rect=[0, 0, 1, 0.97])
-        plt.savefig(self.output_dir + '\\biomass_optimization_results.png', dpi=300, bbox_inches='tight')
+        
+        # Save with unique ID
+        plot_file = self.get_output_filename("biomass_optimization_results", "png")
+        plt.savefig(plot_file, dpi=300, bbox_inches='tight')
         plt.show()
         
         
@@ -257,9 +272,10 @@ class BiomassModel:
             "profit_cum": profit_cum[:-1]       # N valeurs
         })
 
-        # Sauvegarde dans un fichier CSV
-        df.to_csv(self.output_dir + "\\biomass_optimization_timeseries.csv", index=False)
-        
+        # Sauvegarde dans un fichier CSV with unique ID
+        csv_file = self.get_output_filename("biomass_optimization_timeseries", "csv")
+        df.to_csv(self.output_dir + "\\" + csv_file, index=False)
+            
     
     def generate_detailed_results(self, t, x_opt, u_opt):
         """Generate detailed results for each time period"""
@@ -304,6 +320,21 @@ class BiomassModel:
         
         # Create DataFrame
         df_detailed = pd.DataFrame({
+            'Model_Type': self.params['model_type'],
+            'T': self.params['T'],
+            'N': self.params['N'],
+            'x0': self.params['x0'],
+            'r_growth': self.params['r_growth'],
+            'K': self.params['K'],
+            'dissipation_rate': self.params['dissipation_rate'],
+            'interest_rate': self.params['interest_rate'],
+            'unit_cost': self.params['unit_cost'],
+            'unit_price': self.params['unit_price'],
+            'E': self.params['E'],
+            'Time_Step': dt,
+            'Growth_Rate': growth_rates,
+            'Control_Effort': u_opt,
+            'period': np.arange(len(t)-1),
             'Time': t[:-1],
             'Biomass': x_opt[:-1],
             'Growth_Rate': growth_rates,
@@ -319,8 +350,8 @@ class BiomassModel:
         params_df = pd.DataFrame([self.params])
         
         # Save to Excel with multiple sheets
-        excel_path = os.path.join(self.output_dir, 'detailed_results.xlsx')
-        with pd.ExcelWriter(excel_path, engine='openpyxl') as writer:
+        excel_file = self.output_dir + "\\" + self.get_output_filename("detailed_results", "xlsx")
+        with pd.ExcelWriter(excel_file, engine='openpyxl') as writer:
             df_detailed.to_excel(writer, sheet_name='Detailed_Results', index=False)
             params_df.to_excel(writer, sheet_name='Parameters', index=False)
         
@@ -347,10 +378,22 @@ if __name__ == '__main__':
     if not os.path.exists('params.json'):
         raise FileNotFoundError("params.json file not found. Please create it with the required parameters.")
     
-    # Load parameters from JSON file
-    with open('params.json', 'r') as f:
-        params = json.load(f)
-        print("Parameters loaded:", params) 
-        
+    try:
+        # Load parameters from JSON file
+        with open('params.json', 'r') as f:
+            params = json.load(f)
+            print("Parameters loaded:", params) 
+    except json.JSONDecodeError as e:   
+        raise ValueError(f"Error decoding JSON from params.json: {e}")
+    except FileNotFoundError as e:
+        raise ValueError(f"params.json file not found: {e}")
+    except Exception as e:
+        raise ValueError(f"An unexpected error occurred: {e}")
+    
+    # Validate parameters
+    if not isinstance(params, dict):
+        raise ValueError("Parameters should be a dictionary loaded from params.json.")
+            
     # Run the main function with the loaded parameters
     main(params)
+
