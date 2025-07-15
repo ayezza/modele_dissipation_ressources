@@ -18,7 +18,7 @@ class BiomassModel:
         self.params = params
         
         # Create output directory if it doesn't exist
-        self.output_dir = 'output'
+        self.output_dir = os.path.abspath('output')
         if not os.path.exists(self.output_dir):
             os.makedirs(self.output_dir)
             self.output_dir = os.path.abspath(self.output_dir)
@@ -274,7 +274,7 @@ class BiomassModel:
 
         # Sauvegarde dans un fichier CSV with unique ID
         csv_file = self.get_output_filename("biomass_optimization_timeseries", "csv")
-        df.to_csv(self.output_dir + "\\" + csv_file, index=False)
+        df.to_csv(csv_file, index=False)
             
     
     def generate_detailed_results(self, t, x_opt, u_opt):
@@ -350,7 +350,7 @@ class BiomassModel:
         params_df = pd.DataFrame([self.params])
         
         # Save to Excel with multiple sheets
-        excel_file = self.output_dir + "\\" + self.get_output_filename("detailed_results", "xlsx")
+        excel_file = self.get_output_filename("detailed_results", "xlsx")
         with pd.ExcelWriter(excel_file, engine='openpyxl') as writer:
             df_detailed.to_excel(writer, sheet_name='Detailed_Results', index=False)
             params_df.to_excel(writer, sheet_name='Parameters', index=False)

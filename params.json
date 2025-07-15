@@ -2,7 +2,7 @@
     "T": 30,         
     "N": 360, 
     "x0": 500.0,    
-    "r_growth": 2,  
+    "r_growth": 0.5,  
     "K": 5000.0,         
     "dissipation_rate": 1.40,        
     "interest_rate": 0.05,  
