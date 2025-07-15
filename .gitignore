@@ -1,0 +1,64 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+old_main/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+*.docx
+*.ppx
+*.tmp
+
+# Virtual Environment
+venv/
+ENV/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project specific
+!data/output/.gitkeep
+logs/*
+!logs/.gitkeep
+
+# Système d'exploitation
+.DS_Store
+Thumbs.db
+
+# Fichiers de configuration locaux
+.env
+.env.local
+.env.*.local
+.ssh
+
+# Cache et fichiers temporaires
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Allow Copilot to access all project files
+!*.py
+!*.js
+!*.html
+!*.css
+!*.json
+!*.md
