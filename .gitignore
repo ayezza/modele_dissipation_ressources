@@ -20,7 +20,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-*.docx
+# *.docx
 *.ppx
 *.tmp
 
