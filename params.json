@@ -1,13 +1,13 @@
 {
-    "T": 30,         
-    "N": 360, 
+    "T": 50,         
+    "N": 500, 
     "x0": 500.0,    
-    "r_growth": 1.0,  
+    "r_growth": 10.0,  
     "K": 5000.0,         
-    "dissipation_rate": 0.2,        
+    "dissipation_rate": 0.3,        
     "interest_rate": 0.05,  
     "unit_cost": 2,
     "unit_price": 10,
     "E": 1.0,  
-    "model_type": "differential"
-}
+    "model_type": "volterra"
+} 

@@ -199,7 +199,7 @@ class BiomassModel:
         ax2.grid()
 
 
-        # Extracted biomass
+        # 3. Extracted biomass
         extracted_biomass = u_opt * x_opt[:-1]  # Calculate extracted biomass
         ax3 = fig.add_subplot(gs[2, 0])
         ax3.plot(t[:-1], extracted_biomass, 'm-', label='Biomasse extraite')
@@ -211,7 +211,7 @@ class BiomassModel:
         ax3.legend()
 
 
-        # 3. Profit instantané
+        # 4. Profit instantané
         dt = self.params['T'] / self.params['N']
         profit_instant = np.exp(-self.params['interest_rate'] * t[:-1]) * u_opt * x_opt[:-1] * dt
         ax4 = fig.add_subplot(gs[3, 0])
@@ -223,7 +223,7 @@ class BiomassModel:
         ax4.grid()
         ax4.legend()
 
-        # 4. Profit cumulé
+        # 5. Profit cumulé
         profit_cum = np.zeros_like(t)
         for i in range(self.params['N']):
             profit_cum[i+1] = profit_cum[i] + np.exp(-self.params['interest_rate'] * t[i]) * u_opt[i] * x_opt[i] * dt
@@ -339,8 +339,6 @@ class BiomassModel:
             'period': np.arange(len(t)-1),
             'Time': t[:-1],
             'Biomass': x_opt[:-1],
-            'Growth_Rate': growth_rates,
-            'Control_Effort': u_opt,
             'Extracted_Biomass': extracted,
             'Revenue': revenues,
             'Cost': costs,

@@ -58,7 +58,7 @@ python main.py
 
 The program will:
 1. Load parameters from `params.json`
-2. Optimize the harvesting strategy depending of the model type (Volterra or Differential)
+2. Optimize the harvesting strategy depending of the model type (**Volterra** or **Differential**)
 3. Generate visualizations and save them as png images in the `output` directory
 4. Save results to CSV and Excel files in the `output` directory
 
