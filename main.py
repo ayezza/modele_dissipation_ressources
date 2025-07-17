@@ -1,3 +1,12 @@
+    """
+Biomass Management Optimization Model
+Author: Yezza Abdel, Ph.D.
+Date: July 2025
+This module implements a numerical optimization model for biomass management in both Volterra integral equations (with memory effects) and differential equations approaches.
+It includes functionalities for simulating biomass dynamics, calculating profits, optimizing control efforts, and generating detailed results.
+It also provides visualization of results and saves them in various formats (PNG, CSV, Excel).
+    """
+
 import uuid  # used to generate unique run IDs for output files
 import os
 # -*- coding: utf-8 -*- 
