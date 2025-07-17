@@ -346,10 +346,11 @@ class BiomassModel:
             'Cumulative_Profit': profits_cumulative
         })
         
+        print("Summary of results:")
+        print(df_detailed.describe())
+        
         # Add model parameters as a new sheet
         params_df = pd.DataFrame([self.params])
-        print("Summary of results:")
-        print(params_df.summary())
         
         # Save to Excel with multiple sheets
         excel_file = self.get_output_filename("detailed_results", "xlsx")

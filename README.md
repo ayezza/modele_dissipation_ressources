@@ -2,7 +2,7 @@
 
 This project implements a numerical optimization model for biomass management, considering both Volterra integral equations (with memory effects) and differential equations approaches.
 
-The Volerra integral equation case is formulated based on my doctorate thesis in 1991, fourth application (pp. 159-169): 
+The Volterra integral equation case is formulated based on my doctorate thesis in 1991, fourth application (pp. 159-169): 
 [Thèse de doctorat Yezza Abdel](https://umontreal.scholaris.ca/bitstreams/f3f9d2c1-d190-4aef-997d-1e51bc87eb4a/download) - Ph.D Yezza Abdel, 1991.
 
 
